@@ -15,6 +15,7 @@ const readPosts = () => {
 
 const populatePosts = () => {
   // TODO: implement this
+  return Post.insertMany(readPosts());
 };
 
 module.exports = { readPosts, populatePosts };
