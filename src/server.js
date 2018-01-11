@@ -50,7 +50,15 @@ server.get('/top-answer/:soID', (req, res) => {
 });
 
 server.get('/popular-jquery-questions', (req, res) => {
-  Post.find({tags: 'jquery'}).
+  Post.find({
+    tags: 'jquery',
+    $or: [{ score: { $gt: 5000 } }, { 'user.reputation:': { $gt: 200000 } }],
+  }).exec((error, posts) => {
+    if (posts.length === 0) {
+      throw new Error('No Posts');
+    }
+    res.json(posts);
+  });
 });
 
 module.exports = { server };
